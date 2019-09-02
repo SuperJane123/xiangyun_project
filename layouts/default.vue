@@ -1,9 +1,9 @@
 <template>
   <div>
-   <!-- <Header/> -->
+   <Header/>
     <!-- 内容占位符，相等于router-view -->
     <nuxt />
-    <!-- <Footer/> -->
+    <Footer/>
   </div>
 </template>
 
