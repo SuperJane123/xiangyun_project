@@ -18,35 +18,43 @@
       <div class="login" v-if="!$store.state.user.loginFrom.token">
         <nuxt-link to="/user/login">登陆&nbsp;/&nbsp;注册</nuxt-link>
       </div>
-       <!-- 登陆成功后显示的头像 -->
-       
-        <el-dropdown v-else class="Dropdown">
-          <img :src="`http://127.0.0.1:1337${loginFrom.user.defaultAvatar}`" alt="" class="">
-          <span class="el-dropdown-link">
-            {{loginFrom.user.nickname}}
-            <i class="el-icon-caret-bottom el-icon--right"></i>
-          </span>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>个人中心</el-dropdown-item>
-            <el-dropdown-item>退出</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
+      <!-- 登陆成功后显示的头像 -->
+
+      <el-dropdown v-else class="Dropdown">
+        <span class="el-dropdown-link">
+          <nuxt-link to>
+            <img :src="`http://127.0.0.1:1337${loginFrom.user.defaultAvatar}`" alt class />
+          </nuxt-link>
+          {{loginFrom.user.nickname}}
+          <i class="el-icon-caret-bottom el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>个人中心</el-dropdown-item>
+          <el-dropdown-item @click.native="handleLoginOut">退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </el-row>
   </div>
 </template>
 
 <script>
 export default {
-computed:{
-    loginFrom(){
-      return this.$store.state.user.loginFrom
+  computed: {
+    loginFrom() {
+      return this.$store.state.user.loginFrom;
     }
-},
+  },
 
-mounted(){
-  console.log(this.$store.state)
-}
+  methods:{
+    handleLoginOut(){
+      // 清除store中的用于信息
+      this.$store.commit('user/clearUserInfo')
+    }
+  },
 
+  mounted() {
+    console.log(this.$store.state);
+  }
 };
 </script>
 
@@ -56,16 +64,15 @@ mounted(){
   width: 100%;
   // border-bottom: 1px solid #eee;
   box-shadow: 2px 2px 3px #eee;
-   box-sizing: border-box;
-  
+  box-sizing: border-box;
+
   .header {
     margin: 0 auto;
     width: 1000px;
     height: 60px;
     line-height: 60px;
-   
-    .logo {
 
+    .logo {
       img {
         display: block;
         margin-top: 9px;
@@ -87,14 +94,13 @@ mounted(){
         }
       }
       .nuxt-link-exact-active {
-          background-color: #409eff;
-          color: #fff;
+        background-color: #409eff;
+        color: #fff;
 
-          &:hover {
-              color: #fff
-          }
+        &:hover {
+          color: #fff;
+        }
       }
-     
     }
     .login {
       font-size: 14px;
@@ -102,13 +108,11 @@ mounted(){
       a {
         display: inline;
 
-
-        &:hover{
+        &:hover {
           color: #409eff;
           text-decoration: underline;
         }
       }
-
     }
   }
 }
@@ -120,7 +124,7 @@ mounted(){
     vertical-align: middle;
     border: 1px solid #fff;
     box-sizing: border-box;
-    
+
     &:hover {
       border: 1px solid #409eff;
     }
@@ -128,5 +132,4 @@ mounted(){
 }
 
 // 该class是nuxt会自动去匹配的nuxt-link的to的值，如果url和to的值相等会自动加上上面的class
- 
 </style>

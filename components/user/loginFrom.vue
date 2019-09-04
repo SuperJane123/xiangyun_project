@@ -48,10 +48,14 @@ export default {
               .then(res=>{
                   console.log(res)
                   if(res.status === 200){
+                    // 并且把token值保存到本地存储里面
+                    // 把值赋给仓库的loginFrom
                     this.$store.commit('user/setUserInfo',res.data)
-                    console.log(this.$store.state)
+                    // console.log(this.$store.state)
                   }
               })
+          }else {
+            this.$message.error('验证失败')
           }
       })
   }
