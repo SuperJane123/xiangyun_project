@@ -15,28 +15,55 @@
       </el-row>
 
       <!-- 登陆注册 -->
-      <div class="login">
-        <nuxt-link to="/user/login">登陆/注册</nuxt-link>
+      <div class="login" v-if="!$store.state.user.loginFrom.token">
+        <nuxt-link to="/user/login">登陆&nbsp;/&nbsp;注册</nuxt-link>
       </div>
+       <!-- 登陆成功后显示的头像 -->
+       
+        <el-dropdown v-else class="Dropdown">
+          <img :src="`http://127.0.0.1:1337${loginFrom.user.defaultAvatar}`" alt="" class="">
+          <span class="el-dropdown-link">
+            {{loginFrom.user.nickname}}
+            <i class="el-icon-caret-bottom el-icon--right"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>个人中心</el-dropdown-item>
+            <el-dropdown-item>退出</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
     </el-row>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+computed:{
+    loginFrom(){
+      return this.$store.state.user.loginFrom
+    }
+},
+
+mounted(){
+  console.log(this.$store.state)
+}
+
+};
 </script>
 
 
 <style lang="less" scoped>
 .container {
   width: 100%;
-  border-bottom: 1px solid #eee;
+  // border-bottom: 1px solid #eee;
   box-shadow: 2px 2px 3px #eee;
+   box-sizing: border-box;
+  
   .header {
-      margin: 0 auto;
+    margin: 0 auto;
     width: 1000px;
     height: 60px;
     line-height: 60px;
+   
     .logo {
 
       img {
@@ -68,6 +95,34 @@ export default {};
           }
       }
      
+    }
+    .login {
+      font-size: 14px;
+      color: #666;
+      a {
+        display: inline;
+
+
+        &:hover{
+          color: #409eff;
+          text-decoration: underline;
+        }
+      }
+
+    }
+  }
+}
+
+.Dropdown {
+  img {
+    width: 36px;
+    border-radius: 50%;
+    vertical-align: middle;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    
+    &:hover {
+      border: 1px solid #409eff;
     }
   }
 }

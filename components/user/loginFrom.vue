@@ -5,10 +5,11 @@
         <el-input v-model="loginFrom.username" placeholder="用户名/手机"></el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginFrom.password" placeholder="密码"></el-input>
+        <el-input v-model="loginFrom.password" placeholder="密码"  @keydown.enter.native="handleLogin"></el-input>
       </el-form-item>
       <p class="forget-password">
-        <a href="#">忘记密码</a>
+        <!-- <a href="#">忘记密码</a> -->
+        <nuxt-link to="#">忘记密码</nuxt-link>
       </p>
       <el-button type="primary" class="login-btn" @click="handleLogin">登陆</el-button>
     </el-form>
@@ -46,6 +47,10 @@ export default {
               })
               .then(res=>{
                   console.log(res)
+                  if(res.status === 200){
+                    this.$store.commit('user/setUserInfo',res.data)
+                    console.log(this.$store.state)
+                  }
               })
           }
       })
