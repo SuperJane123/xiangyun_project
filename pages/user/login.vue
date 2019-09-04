@@ -16,7 +16,12 @@
        
 
         <!-- 登陆组件功能 -->
-        <loginFrom v-show="current===0"></loginFrom>
+        <loginFrom v-if="false"></loginFrom>
+
+
+        <!-- 注册组件功能 -->
+
+        <registerFrom v-else></registerFrom>
       </div>
     </el-row>
   </div>
@@ -24,6 +29,7 @@
 
 <script>
 import loginFrom from "@/components/user/loginFrom";
+import registerFrom from '@/components/user/registerFrom'
 export default {
   data() {
     return {
@@ -33,7 +39,7 @@ export default {
 
   // 注入组件
   components: {
-    loginFrom
+    loginFrom,registerFrom
   }
 };
 </script>
