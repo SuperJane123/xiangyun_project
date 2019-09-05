@@ -64,9 +64,6 @@ export default {
         cb([]);
         return;
       }
-      // this.singleForm.departCity = val
-      //   console.log(val);
-      //   请求出发城市数据
       this.$axios({
         url: "/airs/city",
         method: "GET",
@@ -78,6 +75,9 @@ export default {
           for (var i of data) {
             i.value = i.name.replace("市", "");
           }
+          //   设置默认值
+          this.singleForm.departCity = data[0].value;
+          this.singleForm.departCode = data[0].sort
           // 用callback返回数据到下拉菜单中
           cb(data);
         }
@@ -102,7 +102,13 @@ export default {
           const { data } = res.data;
           data.forEach(e => {
             e.value = e.name.replace("市", "");
+
           });
+          //   设置默认值
+          this.singleForm.destCity = data[0].value;
+          this.singleForm.destCode = data[0].sort
+
+
           // 用callback返回数据到下拉菜单中
           cb(data);
         }
@@ -154,7 +160,17 @@ export default {
         });
         return;
       }
-     
+      //   请求数据
+      this.$axios({
+        url: "/airs",
+        method: "GET",
+        params: this.singleForm
+      }).then(res => {
+        console.log(res);
+        if (res.status === 200) {
+          this.$router.push({ path: "/air/flights", query: this.singleForm });
+        }
+      });
     }
   },
   mounted(value) {
