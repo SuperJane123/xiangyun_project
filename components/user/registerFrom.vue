@@ -108,11 +108,11 @@ export default {
                 //    },2000)
               }
             })
-            .catch(err => {
-              if (this.code !== this.from.captcha) {
-                this.$message.error("验证码错误");
-              }
-            });
+            // .catch(err => {
+            //   if (this.code !== this.from.captcha) {
+            //     this.$message.error("验证码错误");
+            //   }
+            // });
         } else {
           this.$message.error("请填写完整表单信息！");
         }
