@@ -16,12 +16,12 @@
        
 
         <!-- 登陆组件功能 -->
-        <loginFrom v-if="false"></loginFrom>
+        <loginFrom v-show="current === 0"></loginFrom>
 
 
         <!-- 注册组件功能 -->
 
-        <registerFrom v-else></registerFrom>
+        <registerFrom v-show="current === 1"></registerFrom>
       </div>
     </el-row>
   </div>

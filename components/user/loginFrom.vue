@@ -52,6 +52,10 @@ export default {
                     // 把值赋给仓库的loginFrom
                     this.$store.commit('user/setUserInfo',res.data)
                     // console.log(this.$store.state)
+                    this.$message.success('登陆成功，正在跳转页面')
+                    setTimeout(()=>{
+                    this.$router.push({name: 'index'})
+               },2000)
                   }
               })
           }else {
