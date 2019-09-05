@@ -5,21 +5,21 @@
       <i class="iconfont iconfeiji"></i>
       <span>国内机票</span>
     </h2>
+
+    <!-- 表单 -->
     <el-row type="flex" class="main" justify="space-between">
       <!-- 中间表格+广告部分 -->
       <div class="from-wapper">
         <el-row type="flex" class="from_header">
           <!-- 表格tab栏 -->
           <span
-            v-for="(val,index) in ['单程','往返']"
+            v-for="(val,index) in tab"
             :key="index"
             @click="handleCurret(index)"
             :class="{active: current === index}"
           >
-            <i class="iconfont icondancheng" v-show="current === 0">
-              <i class="iconfont iconshuangxiang" v-show="current === 1"></i>
-            </i>
-            {{val}}
+            <i :class="val.icon"> </i>
+            {{val.title}}
           </span>
         </el-row>
 
@@ -80,6 +80,17 @@ import singelFrom from "@/components/air/airFrom";
 export default {
   data() {
     return {
+      tab:[
+        {
+          title: '单程',
+          icon: 'iconfont icondancheng'
+        },
+        {
+          title: '往返',
+          icon: 'iconfont iconshuangxiang'
+        }
+
+      ],
       // tab栏当前页面
       current: 0,
 
@@ -96,6 +107,13 @@ export default {
   methods: {
     handleCurret(index) {
       this.current = index;
+      if(index === 1){
+        this.$alert('目前暂不支持往返，请使用单程选票！','提示',{
+          confirmButtonText: "确定",
+          type: "warning"
+        });
+        this.current = 0;
+      }
     }
   },
   mounted() {

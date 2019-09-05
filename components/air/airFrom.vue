@@ -47,6 +47,7 @@ export default {
   data() {
     const value = new Date();
     return {
+      
       singleForm: {
         departCity: "", //出发城市
         departCode: "", //出发城市代码
