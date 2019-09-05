@@ -26,6 +26,7 @@
           style="width: 100%"
           v-model="singleForm.departDate"
           @change="handledepartDate"
+          :picker-options="pickerOptions1"
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
@@ -47,6 +48,12 @@ export default {
   data() {
     const value = new Date();
     return {
+      pickerOptions1: {
+          disabledDate(time) {
+            // console.log(time)
+             return time.getTime() < Date.now();
+          },
+      },
       
       singleForm: {
         departCity: "", //出发城市
@@ -139,6 +146,8 @@ export default {
       // 参数val代表的时当前时间
       this.singleForm.departDate = monent(val).format("YYYY-MM-DD");
     },
+
+    
 
     // 搜索方法
     handleSearch() {

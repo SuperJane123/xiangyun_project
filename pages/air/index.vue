@@ -39,16 +39,16 @@
       <el-col :span="8" class="content">
         <i
           class="iconfont iconweibiaoti-_huabanfuben"
-          style="color: rgb(64, 158, 255);font-size:30px"
+          style="color: rgb(64, 158, 255)"
         ></i>
         <span>100%航协认证</span>
       </el-col>
       <el-col :span="8" class="content">
-        <i class="iconfont iconbaozheng" style="color: green;font-size:30px"></i>
+        <i class="iconfont iconbaozheng" style="color: green"></i>
         <span>出行保证</span>
       </el-col>
       <el-col :span="8" class="content">
-        <i class="iconfont icondianhua" style="color: rgb(64, 158, 255);font-size:30px"></i>
+        <i class="iconfont icondianhua" style="color: rgb(64, 158, 255)"></i>
         <span>7x24小时服务</span>
       </el-col>
     </el-row>
@@ -194,6 +194,11 @@ export default {
       font-size: 16px;
       &:last-child {
         border-right: 0;
+        
+      }
+      i {
+        font-size: 30px;
+        vertical-align: top
       }
     }
   }
