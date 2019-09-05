@@ -29,10 +29,13 @@
         ></el-date-picker>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width: 100%" @click="handelSearch">
+        <el-button type="primary" style="width: 100%" @click="handleSearch">
           <i class="el-icon-search"></i> 搜索
         </el-button>
       </el-form-item>
+      <div class="reverse">
+        <span @click="handleReverse">换</span>
+      </div>
     </el-form>
   </div>
 </template>
@@ -137,7 +140,7 @@ export default {
     },
 
     // 搜索方法
-    handelSearch() {
+    handleSearch() {
       console.log(this.singleForm);
       if (!this.singleForm.departCity) {
         this.$alert("请选择出发城市", "提示", {
@@ -171,7 +174,17 @@ export default {
           this.$router.push({ path: "/air/flights", query: this.singleForm });
         }
       });
+    },
+    // 点击转换功能
+    handleReverse(){
+    const {departCity,destCity,departCode,destCode} = this.singleForm
+      this.singleForm.departCity = destCity
+      this.singleForm.departCode = destCode
+
+      this.singleForm.destCity = departCity
+      this.singleForm.destCode = departCode
     }
+
   },
   mounted(value) {
     this.time = monent(value).format("YYYY-MM-DD");
@@ -184,5 +197,71 @@ export default {
 <style lang="less" scoped>
 .single {
   padding: 15px 50px 15px 15px;
+  position: relative;
+
 }
+.reverse {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+  &::before {
+    position: absolute;
+    top: 36px;
+    right: 25px;
+    content: "";
+    display: block;
+    width: 25px;
+    height: 1px;
+    background-color: #ccc;
+  }
+  &::after {
+    position: absolute;
+    top: 95px;
+    right: 25px;
+      content: "";
+    display: block;
+    width: 25px;
+    height: 1px;
+    background-color: #ccc;
+  }
+  span {
+    position: absolute;
+    top: 56px;
+    right: 15px;
+    display: block;
+    width:20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    background-color: #999;
+    color: #fff;
+    font-size: 12px;
+    &:hover{
+      cursor: pointer;
+    }
+    &::before{
+      display: block;
+      content: "";
+      position: absolute;
+      top: -20px;
+      right:10px;
+      height: 20px;
+      width: 1px;
+      background: #ccc;
+    }
+    &::after {
+      display: block;
+      content: "";
+      position: absolute;
+      top: 20px;
+      right:10px ;
+      height: 20px;
+      width: 1px;
+      background: #ccc;
+      
+    }
+  }
+}
+
 </style>
