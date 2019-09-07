@@ -58,7 +58,7 @@
     </el-row>
 
 
-    <!-- 分页标签 -->
+   
     
   </div>
 </template>
@@ -76,6 +76,8 @@ export default {
   },
   data() {
     return {
+        
+        // 控制展开列表的变量
       isShow: false
     };
   },
@@ -96,7 +98,10 @@ export default {
       const min = rangeMin % 60;
       return hour + "时" + min + "分";
     }
-  }
+  },
+
+
+ 
 };
 </script>
 
