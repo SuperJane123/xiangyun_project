@@ -131,12 +131,14 @@ export default {
       console.log(item);
       //   储存出发城市的code
       this.singleForm.departCode = item.sort;
+      this.singleForm.departCity = item.value
     },
 
     // 到达城市----选中时触发的函数
     handleDestSelect(item) {
       console.log(item);
       this.singleForm.destCode = item.sort;
+      this.singleForm.destCity = item.value
     },
 
     // 选则日期时触发的函数
@@ -269,9 +271,11 @@ export default {
       height: 20px;
       width: 1px;
       background: #ccc;
-      
     }
   }
 }
 
+
+
+//test
 </style>

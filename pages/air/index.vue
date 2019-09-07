@@ -62,8 +62,8 @@
     <!-- 图片部分 -->
     <el-row class="PrewImg" type="flex" justify="space-between">
       <el-col :span="6" class="imgInfo" v-for="(item,index) in imgList" :key="index">
-       <nuxt-link :to='`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`'>
-         <img :src="item.cover" alt />
+       <nuxt-link :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`">
+         <img :src="item.cover" />  
         <el-row type="flex" justify="space-between" class="textInfo">
           <span style="font-size:14px">{{item.departCity}}-{{item.destCity}}</span>
           <span style="font-size:18px">¥{{item.price}}</span>
