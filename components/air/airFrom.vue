@@ -8,6 +8,7 @@
           @select="handleDepartSelect"
           style="width: 100%"
           v-model="singleForm.departCity"
+          @blur="handleDepartBLur"
         ></el-autocomplete>
       </el-form-item>
       <el-form-item label="到达城市">
@@ -17,6 +18,7 @@
           @select=" handleDestSelect"
           style="width: 100%"
           v-model="singleForm.destCity"
+          @blur="handleDesttBLur"
         ></el-autocomplete>
       </el-form-item>
       <el-form-item label="出发时间">
@@ -48,13 +50,17 @@ export default {
   data() {
     const value = new Date();
     return {
+      // 数组是用来储存出发数据的
+      newDet: [],
+      // 数组是用来储存到达数据的
+      newDst: [],
       pickerOptions1: {
-          disabledDate(time) {
-            // console.log(time)
-             return time.getTime() < Date.now();
-          },
+        disabledDate(time) {
+          // console.log(time)
+          return time.getTime() < Date.now();
+        }
       },
-      
+
       singleForm: {
         departCity: "", //出发城市
         departCode: "", //出发城市代码
@@ -86,9 +92,8 @@ export default {
           for (var i of data) {
             i.value = i.name.replace("市", "");
           }
-          //   设置默认值
-          this.singleForm.departCity = data[0].value;
-          this.singleForm.departCode = data[0].sort
+          this.newDet = data;
+
           // 用callback返回数据到下拉菜单中
           cb(data);
         }
@@ -113,12 +118,8 @@ export default {
           const { data } = res.data;
           data.forEach(e => {
             e.value = e.name.replace("市", "");
-
           });
-          //   设置默认值
-          this.singleForm.destCity = data[0].value;
-          this.singleForm.destCode = data[0].sort
-
+          this.newDst = data;
 
           // 用callback返回数据到下拉菜单中
           cb(data);
@@ -131,25 +132,46 @@ export default {
       console.log(item);
       //   储存出发城市的code
       this.singleForm.departCode = item.sort;
-      this.singleForm.departCity = item.value
+      this.singleForm.departCity = item.value;
     },
 
     // 到达城市----选中时触发的函数
     handleDestSelect(item) {
       console.log(item);
       this.singleForm.destCode = item.sort;
-      this.singleForm.destCity = item.value
+      this.singleForm.destCity = item.value;
     },
 
     // 选则日期时触发的函数
-
     handledepartDate(val) {
       console.log(val);
       // 参数val代表的时当前时间
       this.singleForm.departDate = monent(val).format("YYYY-MM-DD");
     },
 
-    
+    // 失去焦事件--出发城市
+    handleDepartBLur() {
+      //   设置默认值
+      if (this.singleForm.departCity.length === 0) {
+        this.singleForm.departCity = "";
+        return;
+      }
+      this.singleForm.departCity = this.newDet[0] ? this.newDet[0].value : "";
+      this.singleForm.departCode = this.newDet[0] ? this.newDet[0].sort : "";
+
+    },
+
+    //失去焦点事件 --- 到达城市
+    handleDesttBLur() {
+      if (this.singleForm.destCity.length === 0) {
+        this.singleForm.destCity = "";
+        return;
+      }
+      // 失去焦点时，默认选中第一个
+      //   设置默认值
+      this.singleForm.destCity = this.newDst[0] ? this.newDst[0].value : "";
+      this.singleForm.destCode = this.newDst[0] ? this.newDet[0].sort : "";
+    },
 
     // 搜索方法
     handleSearch() {
@@ -188,15 +210,14 @@ export default {
       });
     },
     // 点击转换功能
-    handleReverse(){
-    const {departCity,destCity,departCode,destCode} = this.singleForm
-      this.singleForm.departCity = destCity
-      this.singleForm.departCode = destCode
+    handleReverse() {
+      const { departCity, destCity, departCode, destCode } = this.singleForm;
+      this.singleForm.departCity = destCity;
+      this.singleForm.departCode = destCode;
 
-      this.singleForm.destCity = departCity
-      this.singleForm.destCode = departCode
+      this.singleForm.destCity = departCity;
+      this.singleForm.destCode = departCode;
     }
-
   },
   mounted(value) {
     this.time = monent(value).format("YYYY-MM-DD");
@@ -210,13 +231,12 @@ export default {
 .single {
   padding: 15px 50px 15px 15px;
   position: relative;
-
 }
 .reverse {
   position: absolute;
   top: 0;
   right: 0;
-  
+
   &::before {
     position: absolute;
     top: 36px;
@@ -231,7 +251,7 @@ export default {
     position: absolute;
     top: 95px;
     right: 25px;
-      content: "";
+    content: "";
     display: block;
     width: 25px;
     height: 1px;
@@ -242,22 +262,22 @@ export default {
     top: 56px;
     right: 15px;
     display: block;
-    width:20px;
+    width: 20px;
     height: 20px;
     text-align: center;
     line-height: 20px;
     background-color: #999;
     color: #fff;
     font-size: 12px;
-    &:hover{
+    &:hover {
       cursor: pointer;
     }
-    &::before{
+    &::before {
       display: block;
       content: "";
       position: absolute;
       top: -20px;
-      right:10px;
+      right: 10px;
       height: 20px;
       width: 1px;
       background: #ccc;
@@ -267,15 +287,13 @@ export default {
       content: "";
       position: absolute;
       top: 20px;
-      right:10px ;
+      right: 10px;
       height: 20px;
       width: 1px;
       background: #ccc;
     }
   }
 }
-
-
 
 //test
 </style>
