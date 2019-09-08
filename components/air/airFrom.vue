@@ -206,7 +206,7 @@ export default {
       }).then(res => {
         console.log(res);
         if (res.status === 200) {
-          // this.$router.push({ path: "/air/flights", query: this.singleForm });
+          this.$router.push({ path: "/air/flights", query: this.singleForm });
           // 要判断本地储存是否有数据
          const arr =  JSON.parse(localStorage.getItem('flightsData')) || []
         // 如果有，就push数据

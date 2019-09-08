@@ -23,10 +23,10 @@
     <div class="history">
       <h3>历史查询</h3>
       <nuxt-link to="#">
-      <el-row class="choose_info" type="flex" align="middle" justify="sapce-between">
-        <el-col :span="19   ">
-          <span>广州-北京</span>
-          <p>2019-09-07</p>
+      <el-row class="choose_info" type="flex" align="middle" justify="sapce-between"  v-for="(item,index) in flightsData" :key="index">
+        <el-col :span="19">
+          <span>{{item.departCity}}-{{item.destCity}}</span>
+          <p>{{item.departDate}}</p>
         </el-col>
         <el-col :span="5">
           <span class="choose_button">选择</span>
@@ -38,7 +38,18 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      flightsData:[]
+    }
+  },
+
+ mounted(){
+  //  获取本地数据
+  this.flightsData = JSON.parse(localStorage.getItem('flightsData')) 
+ }
+};
 </script>
 
 <style lang="less" scoped>
