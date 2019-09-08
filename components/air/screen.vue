@@ -120,12 +120,18 @@ export default {
 
     // 点击起飞时间时出触发的函数
 
-    handleDepTime() {
+    handleDepTime(val) {
       //  console.log(val); //比如6，12
       //  const Hour = val.split(',')
-      //  const dep_time = this.data.flights.map(e=>{
-      //    return e.dep_time.split('')
-      //})
+      const [from, to] = val.split(",");
+      // console.log(form, to);
+      const dep_time = this.data.flights.filter(e => {
+        const current = e.dep_time.split(":")[0];
+        console.log(current);
+        return +from <= +current && +current < +to;
+      });
+      console.log(dep_time);
+       this.$emit('setFlightsItem',dep_time)
     },
 
     // 选择航空公司时触发的函数
@@ -151,10 +157,10 @@ export default {
     },
 
     // 点击撤销按钮时触发的函数
-    handelClear(){
-      console.log(123)
-      for(var key in this.flightsList){
-        this.flightsList[key] = ""
+    handelClear() {
+      console.log(123);
+      for (var key in this.flightsList) {
+        this.flightsList[key] = "";
       }
     }
   }
