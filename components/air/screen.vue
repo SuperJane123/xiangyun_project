@@ -6,7 +6,7 @@
       <el-button type="primary" plain round size="mini">撤销</el-button>
     </el-col>
     <el-col :span="4" class="selector_data">
-      <el-select v-model="value" placeholder="起飞机场" >
+      <el-select size="mini" v-model="value" placeholder="起飞机场">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -17,7 +17,7 @@
       </el-select>
     </el-col>
     <el-col :span="4" class="selector_data">
-      <el-select v-model="value" placeholder="起飞时间" >
+      <el-select size="mini" v-model="value" placeholder="起飞时间">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -27,7 +27,7 @@
       </el-select>
     </el-col>
     <el-col :span="4" class="selector_data">
-      <el-select v-model="value" placeholder="航空公司" >
+      <el-select size="mini" v-model="value" placeholder="航空公司">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -37,7 +37,7 @@
       </el-select>
     </el-col>
     <el-col :span="4" class="selector_data">
-      <el-select v-model="value" placeholder="机型" >
+      <el-select size="mini" v-model="value" placeholder="机型">
         <el-option
           v-for="item in options"
           :key="item.value"
@@ -63,23 +63,14 @@ export default {
 
 <style lang="less">
 .screen {
-    margin-bottom: 20px;
+  margin-bottom: 20px;
   width: 745px;
   font-size: 14px;
   p {
-      margin-bottom: 10px;
+    margin-bottom: 10px;
   }
   .selector_data {
-      text-align: right;
-      
-      width: 114px;
-      
-       input {
-           height: 28px;
-           font-size: 12px;
-       }
-       
-  
+    width: 114px;
   }
 }
 </style>

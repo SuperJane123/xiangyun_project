@@ -25,7 +25,7 @@
       </div>
 </div>
       <!-- 右侧航班历史记录 -->
-      <div class="aside"></div>
+      <Aside/>
     </el-row>
   </div>
 </template>
@@ -34,6 +34,7 @@
 import Screen from '@/components/air/screen'
 import FlightsHeader from "@/components/air/flightsHeader";
 import FlightsItems from "@/components/air/flightsItems";
+import Aside from '../../components/air/airAside'
 
 export default {
   data() {
@@ -56,7 +57,8 @@ export default {
   components: {
     FlightsHeader,
     FlightsItems,
-    Screen
+    Screen,
+    Aside
   },
 
 
