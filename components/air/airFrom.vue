@@ -176,21 +176,22 @@ export default {
     // 搜索方法
     handleSearch() {
       console.log(this.singleForm);
-      if (!this.singleForm.departCity) {
+      const{departCity,destCity,departDate} = this.singleForm
+      if (!departCity) {
         this.$alert("请选择出发城市", "提示", {
           confirmButtonText: "确定",
           type: "warning"
         });
         return;
       }
-      if (!this.singleForm.destCity) {
+      if (!destCity) {
         this.$alert("请选择目的城市", "提示", {
           confirmButtonText: "确定",
           type: "warning"
         });
         return;
       }
-      if (!this.singleForm.departDate) {
+      if (!departDate) {
         this.$alert("请选择出发时间", "提示", {
           confirmButtonText: "确定",
           type: "warning"
@@ -205,7 +206,18 @@ export default {
       }).then(res => {
         console.log(res);
         if (res.status === 200) {
-          this.$router.push({ path: "/air/flights", query: this.singleForm });
+          // this.$router.push({ path: "/air/flights", query: this.singleForm });
+          // 要判断本地储存是否有数据
+         const arr =  JSON.parse(localStorage.getItem('flightsData')) || []
+        // 如果有，就push数据
+         if(arr){
+           arr.push(this.singleForm)
+         }
+
+          // 把数据提交到本地存储里面
+          localStorage.setItem('flightsData',JSON.stringify(arr) )
+          
+           
         }
       });
     },

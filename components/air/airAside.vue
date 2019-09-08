@@ -22,6 +22,7 @@
     <!-- 历史查询部分 -->
     <div class="history">
       <h3>历史查询</h3>
+      <nuxt-link to="#">
       <el-row class="choose_info" type="flex" align="middle" justify="sapce-between">
         <el-col :span="19   ">
           <span>广州-北京</span>
@@ -31,6 +32,7 @@
           <span class="choose_button">选择</span>
         </el-col>
       </el-row>
+      </nuxt-link>
     </div>
   </div>
 </template>
