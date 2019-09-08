@@ -22,16 +22,24 @@
     <!-- 历史查询部分 -->
     <div class="history">
       <h3>历史查询</h3>
-      <nuxt-link to="#">
-      <el-row class="choose_info" type="flex" align="middle" justify="sapce-between"  v-for="(item,index) in flightsData" :key="index">
-        <el-col :span="19">
-          <span>{{item.departCity}}-{{item.destCity}}</span>
-          <p>{{item.departDate}}</p>
-        </el-col>
-        <el-col :span="5">
-          <span class="choose_button">选择</span>
-        </el-col>
-      </el-row>
+      <nuxt-link
+        v-for="(item,index) in flightsHistroy" :key="index"
+        :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
+>
+        <el-row
+          class="choose_info"
+          type="flex"
+          align="middle"
+          justify="sapce-between"
+        >
+          <el-col :span="19">
+            <span>{{item.departCity}}-{{item.destCity}}</span>
+            <p>{{item.departDate}}</p>
+          </el-col>
+          <el-col :span="5">
+            <span class="choose_button">选择</span>
+          </el-col>
+        </el-row>
       </nuxt-link>
     </div>
   </div>
@@ -39,16 +47,16 @@
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      flightsData:[]
-    }
+      flightsHistroy: []
+    };
   },
 
- mounted(){
-  //  获取本地数据
-  this.flightsData = JSON.parse(localStorage.getItem('flightsData')) 
- }
+  mounted() {
+    //  获取本地数据
+    this.flightsHistroy = JSON.parse(localStorage.getItem("flightsData"));
+  }
 };
 </script>
 
@@ -85,6 +93,7 @@ export default {
       padding: 10px 0;
       font-size: 14px;
       cursor: pointer;
+      border-bottom: 1px dashed #ddd;
       p {
         margin-top: 5px;
         font-size: 12px;
