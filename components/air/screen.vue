@@ -1,7 +1,7 @@
 <template>
   <el-row type="flex" justify="space-between" class="screen">
     <el-col :span="8">
-      <p>单程： 广州 - 上海 / 2019-09-07</p>
+      <p>单程： {{data.departCity}} - {{data.destCity}} / {{data.departDate}}</p>
       <span>筛选:</span>
       <el-button type="primary" plain round size="mini">撤销</el-button>
     </el-col>
@@ -52,6 +52,13 @@
 
 <script>
 export default {
+  props: {
+    data: {
+      // 接收数据的类型
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       value: "",

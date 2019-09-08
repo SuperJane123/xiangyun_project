@@ -3,7 +3,7 @@
     <el-row type="flex" justify="space-between">
       <div class="left">
       <!-- 过滤器 -->
-    <Screen></Screen>
+    <Screen :data= flightsList.info></Screen>
       <!-- 航班信息标题 -->
       <div>
         <FlightsHeader />
@@ -47,7 +47,9 @@ export default {
         // 总的记录数
         total: 0,
         // 这是一个总数据
-      flightsList: {}
+      flightsList: {
+        info: {}
+      }
     };
   },
 
