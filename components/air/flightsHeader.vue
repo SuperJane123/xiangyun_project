@@ -18,7 +18,7 @@ export default {};
 <style lang="less" scoped>
     .flight_title {
         margin-bottom: 10px;
-        width: 745px;
+        width: 743px;
         height: 38px;
         font-size: 12px;
         color: #666;

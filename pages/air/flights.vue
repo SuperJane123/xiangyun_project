@@ -1,8 +1,9 @@
 <template>
   <div class="container">
     <el-row type="flex" justify="space-between">
+      <div class="left">
       <!-- 过滤器 -->
-
+    <Screen></Screen>
       <!-- 航班信息标题 -->
       <div>
         <FlightsHeader />
@@ -22,7 +23,7 @@
           :total="total"
         ></el-pagination>
       </div>
-
+</div>
       <!-- 右侧航班历史记录 -->
       <div class="aside"></div>
     </el-row>
@@ -30,6 +31,7 @@
 </template>
 
 <script>
+import Screen from '@/components/air/screen'
 import FlightsHeader from "@/components/air/flightsHeader";
 import FlightsItems from "@/components/air/flightsItems";
 
@@ -53,7 +55,8 @@ export default {
   // 注册组件
   components: {
     FlightsHeader,
-    FlightsItems
+    FlightsItems,
+    Screen
   },
 
 
@@ -106,7 +109,7 @@ methods: {
 <style lang="less" scoped>
 .container {
   width: 1000px;
-  margin: 0 auto;
+  margin: 20px auto;
 }
 
 .aside {

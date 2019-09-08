@@ -107,8 +107,8 @@ export default {
 
 <style lang="less">
 .flights_item {
-    margin-bottom: 10px;
-  width: 745px;
+  margin-bottom: 10px;
+  width: 743px;
   text-align: center;
   font-size: 14px;
   border: 1px solid #ddd;
