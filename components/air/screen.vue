@@ -127,11 +127,10 @@ export default {
       // console.log(form, to);
       const dep_time = this.data.flights.filter(e => {
         const current = e.dep_time.split(":")[0];
-        console.log(current);
         return +from <= +current && +current < +to;
       });
       console.log(dep_time);
-       this.$emit('setFlightsItem',dep_time)
+      this.$emit("setFlightsItem", dep_time);
     },
 
     // 选择航空公司时触发的函数
@@ -142,7 +141,6 @@ export default {
         return e.airline_name === val;
       });
       this.$emit("setFlightsItem", arr);
-      console.log(arr);
     },
 
     // 点击选择机型时触发的函数
@@ -162,6 +160,8 @@ export default {
       for (var key in this.flightsList) {
         this.flightsList[key] = "";
       }
+      // 刷新数据
+      this.$emit('setFlightsItem',this.data.flights)
     }
   }
 };

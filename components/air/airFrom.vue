@@ -176,6 +176,7 @@ export default {
     // 搜索方法
     handleSearch() {
       console.log(this.singleForm);
+      this.$store.commit('filghts/setSingleForm',this.singleForm)  
       const{departCity,destCity,departDate} = this.singleForm
       if (!departCity) {
         this.$alert("请选择出发城市", "提示", {
@@ -208,14 +209,15 @@ export default {
         if (res.status === 200) {
           this.$router.push({ path: "/air/flights", query: this.singleForm });
           // 要判断本地储存是否有数据
-         const arr =  JSON.parse(localStorage.getItem('flightsData')) || []
-        // 如果有，就push数据
-         if(arr){
-           arr.push(this.singleForm)
-         }
+        //  const arr =  JSON.parse(localStorage.getItem('flightsData')) || []
+        // // 如果有，就push数据
+        //  if(arr){
+        //    arr.push(this.singleForm)
+        //  }
 
-          // 把数据提交到本地存储里面
-          localStorage.setItem('flightsData',JSON.stringify(arr) )
+        //   // 把数据提交到本地存储里面
+        //   localStorage.setItem('flightsData',JSON.stringify(arr) )
+
           
            
         }

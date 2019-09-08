@@ -23,7 +23,7 @@
     <div class="history">
       <h3>历史查询</h3>
       <nuxt-link
-        v-for="(item,index) in flightsHistroy" :key="index"
+        v-for="(item,index) in getdata" :key="index"
         :to="`/air/flights?departCity=${item.departCity}&departCode=${item.departCode}&destCity=${item.destCity}&destCode=${item.destCode}&departDate=${item.departDate}`"
 >
         <el-row
@@ -52,10 +52,16 @@ export default {
       flightsHistroy: []
     };
   },
+  computed: {
+    getdata(){
+      return this.$store.state.filghts.singleData
+    }
+  },
 
   mounted() {
     //  获取本地数据
-    this.flightsHistroy = JSON.parse(localStorage.getItem("flightsData"));
+    // this.flightsHistroy = JSON.parse(localStorage.getItem("flightsData"));
+    console.log(this.$store.state)
   }
 };
 </script>

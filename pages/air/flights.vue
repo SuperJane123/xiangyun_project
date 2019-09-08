@@ -9,11 +9,12 @@
           <FlightsHeader />
           <!-- 航班信息内容 -->
           <FlightsItems v-for="(item,index) in dataList" :key="index" :data="item" />
+          <div class="empty" v-show="dataList.length === 0">暂无航班信息！</div>
           <!-- 分页标签 -->
           <!-- size-change 切换页面数时调用的函数 
         current-change  点击当前页数时调用函数
           -->
-          <el-row type="flex" justify="center">
+          <el-row type="flex" justify="center" v-show="dataList.length > 0">
             <el-pagination
               @size-change="handleSizeChange"
               @current-change="handleCurrentChange"
@@ -121,6 +122,7 @@ export default {
         (this.pageIndex - 1) * this.pageSize,
         this.pageIndex * this.pageSize
       );
+
       // 总页数要重新复制
       this.total = this.flightsList.flights.length;
     }
@@ -133,9 +135,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.$route);
-    //   获取路由地址上的参数
-    //   console.log(this.$route)
 
     // 调用方法获取机票数据列表
     this.init()
@@ -149,6 +148,11 @@ export default {
   margin: 20px auto;
 }
 
+.empty {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+}
 .aside {
   width: 240px;
 }
