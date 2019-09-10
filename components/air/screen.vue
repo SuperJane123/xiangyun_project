@@ -81,6 +81,9 @@ export default {
   },
   data() {
     return {
+      // 把每个选择器选中的值，放到这个数组中
+      // slector:[],
+
       // 每个选择器所绑定的数据
       flightsList: {
         airport: "", //起飞机场
@@ -129,8 +132,9 @@ export default {
         const current = e.dep_time.split(":")[0];
         return +from <= +current && +current < +to;
       });
-      console.log(dep_time);
+      // console.log(dep_time);
       this.$emit("setFlightsItem", dep_time);
+      // console.log(this.flightsList.flightTimes)
     },
 
     // 选择航空公司时触发的函数
@@ -145,7 +149,7 @@ export default {
 
     // 点击选择机型时触发的函数
     handleAirsize(val) {
-      console.log(val);
+      // console.log(val);
       // 筛选出机型匹配的内容
       const arr = this.data.flights.filter(e => {
         return e.plane_size === val;

@@ -1,0 +1,149 @@
+<template>
+  <div class="orderFrom">
+    <!-- 乘机人 -->
+    <div class="air-column">
+      <h2>乘机人</h2>
+      <el-form>
+        <div class="info_item">
+          <el-form-item label="乘机人类型">
+            <el-input placeholder="姓名" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="成人">
+                <el-option label="成人" value="1"></el-option>
+              </el-select>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="证件类型">
+            <el-input placeholder="证件号码" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="身份证">
+                <el-option label="身份证" value="1"></el-option>
+                <el-option label="护照" value="2"></el-option>
+              </el-select>
+            </el-input>
+          </el-form-item>
+        </div>
+        <div class="info_item">
+          <el-form-item label="乘机人类型">
+            <el-input placeholder="姓名" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="成人">
+                <el-option label="成人" value="1"></el-option>
+              </el-select>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="证件类型">
+            <el-input placeholder="证件号码" class="input-with-select">
+              <el-select v-model="select" slot="prepend" placeholder="身份证">
+                <el-option label="身份证" value="1"></el-option>
+                <el-option label="护照" value="2"></el-option>
+              </el-select>
+            </el-input>
+          </el-form-item>
+        </div>
+
+        <el-button type="primary" class="addMenber">添加乘机人</el-button>
+      </el-form>
+    </div>
+
+    <!-- 保险 -->
+    <div class="air-column">
+      <h2>保险</h2>
+      <div class="insurance">
+        <div class="insurance_item">
+          <el-checkbox label="航空意外险：¥30/份x2 最高赔付260万" border></el-checkbox>
+        </div>
+        <div class="insurance_item">
+          <el-checkbox label="航空意外险：¥30/份x2 最高赔付260万" border></el-checkbox>
+        </div>
+      </div>
+    </div>
+
+    <!-- 联系人 -->
+    <div class="air-column">
+      <h2>联系人</h2>
+      <div class="contact">
+        <el-form ref="form" label-width="80px">
+          <el-form-item label="姓名">
+            <el-input></el-input>
+          </el-form-item>
+          <el-form-item label="手机">
+            <el-input placeholder="请输入手机号码" class="input-with-select">
+              <el-button slot="append">发送验证码</el-button>
+            </el-input>
+          </el-form-item>
+          <el-form-item label="验证码">
+            <el-input></el-input>
+          </el-form-item>
+        </el-form>
+           <el-button type="warning" class="submit">提交订单</el-button>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      select: ""
+    };
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.orderFrom {
+  h2 {
+    margin-bottom: 20px;
+    font-size: 22px;
+    font-weight: normal;
+  }
+  .air-column {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px dashed #eee;
+
+    .info_item {
+      padding-bottom: 20px;
+      border-bottom: 1px dashed #eee;
+    }
+    .addMenber {
+      margin-top: 20px;
+    }
+  }
+
+  .insurance_item {
+    margin-bottom: 20px;
+  }
+
+  .contact {
+   .el-form-item {
+      margin-bottom: 22px;
+      &:last-child{
+           margin-bottom: 0
+      }
+      .el-input {
+          width: 50%;
+      }
+
+    }
+  }
+  .submit {
+      margin: 50px auto;
+      display: block;
+      width: 250px;
+      height: 50px;
+  }
+}
+
+/deep/ .el-select {
+  width: 130px;
+}
+/deep/ .el-input {
+  width: 100%;
+}
+/deep/ .el-input-group__prepend {
+  background-color: #fff;
+}
+/deep/.el-form-item {
+  margin-bottom: 0;
+}
+</style>

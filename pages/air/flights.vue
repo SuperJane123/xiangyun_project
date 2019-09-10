@@ -85,7 +85,8 @@ export default {
 
         // 这是为了方便给子组件传递数组，并且是不会改变的数据
         this.cacheList = { ...res.data };
-        //   分页总页数
+
+//   分页总页数
         this.total = this.flightsList.flights.length;
 
         //   复制给另一个数组，这是显示当前页面数据的数组
@@ -94,13 +95,13 @@ export default {
     },
 
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`); //比如每页 10 条
+      //console.log(`每页 ${val} 条`); //比如每页 10 条
       this.pageSize = val;
       // 切换页数时显示的数据
       this.dataList = this.flightsList.flights.slice(0, val);
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`); //当前页面1
+     // console.log(`当前页: ${val}`); //当前页面1
 
       // 0,5 (1-1)*5,5
       // 5,10(2-1)*5

@@ -1,7 +1,7 @@
 <template>
   <div class="meuns_wapper">
     <div class="meuns_body">
-      <el-row type="flex" justify="space-between" class="menu-item" align="middle">
+      <el-row type="flex" justify="space-between" class="menu-item" align="middle" @mouseover="showCard">
         <span>热门城市</span>
         <i class="wn el-icon-arrow-right"></i>
       </el-row>
@@ -26,7 +26,7 @@
       </nuxt-link>
     </div>
 
-    <div class="menus_item_card">
+    <div class="menus_item_card" v-show="isShow">
       <nuxt-link to="#">
         <el-row class="card_info">
           <el-col :span="2" class="num">1</el-col>
@@ -59,7 +59,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data(){
+    return {
+      isShow: false
+    }
+  },
+
+  methods: {
+    showCard(){
+      this.isShow = !this.isShow
+    }
+  }
+};
 </script>
 
 
@@ -76,14 +88,6 @@ export default {};
       border-left: 1px solid #ddd;
       border-right: 1px solid #ddd;
       border-top: 1px solid #ddd;
-
-      &:hover {
-        color: orange;
-        border-right: #fff;
-        > i {
-          color: orange;
-        }
-      }
       > i {
         font-size: 20px;
         color: #999;
@@ -91,6 +95,13 @@ export default {};
         right: 15px;
       }
     }
+    .active {
+        color: orange;
+        border-right: #fff;
+        > i {
+          color: orange;
+        }
+      }
   }
   .menus_recommend {
     margin-top: 20px;
