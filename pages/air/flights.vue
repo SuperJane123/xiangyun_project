@@ -86,6 +86,9 @@ export default {
         // 这是为了方便给子组件传递数组，并且是不会改变的数据
         this.cacheList = { ...res.data };
 
+        // 赋值给vuex
+        this.$store.commit('air/setAirInfo',res.data)
+
 //   分页总页数
         this.total = this.flightsList.flights.length;
 

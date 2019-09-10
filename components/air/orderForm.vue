@@ -14,7 +14,7 @@
           </el-form-item>
           <el-form-item label="证件类型">
             <el-input placeholder="证件号码" class="input-with-select" v-model="item.id">
-              <el-select  value="1" slot="prepend" placeholder="身份证">
+              <el-select value="1" slot="prepend" placeholder="身份证">
                 <el-option label="身份证" value="1"></el-option>
                 <el-option label="护照" value="2"></el-option>
               </el-select>
@@ -50,12 +50,16 @@
     <div class="air-column">
       <h2>保险</h2>
       <div class="insurance">
-        <div class="insurance_item">
-          <el-checkbox label="航空意外险：¥30/份x2 最高赔付260万" border></el-checkbox>
+        <div class="insurance_item" v-for="(item,index) in data.insurances" :key="index">
+          <el-checkbox
+            :label="`${item.type}: ¥${item.price}/份x1 最高赔付${item.compensation}元`"
+            border
+            @change="handelsplice(item.id)"
+          ></el-checkbox>
         </div>
-        <div class="insurance_item">
+        <!-- <div class="insurance_item">
           <el-checkbox label="航空意外险：¥30/份x2 最高赔付260万" border></el-checkbox>
-        </div>
+        </div>-->
       </div>
     </div>
 
@@ -84,6 +88,13 @@
 
 <script>
 export default {
+  // 接收来自父组件的数据
+  props: {
+    data: {
+      type: Object,
+      default: {}
+    }
+  },
   data() {
     return {
       select: "",
@@ -94,7 +105,24 @@ export default {
           username: "",
           id: ""
         }
-      ]
+      ],
+
+      // 保险数据信息
+      insurances: [],
+
+      // 联系人姓名
+      contactName: "",
+
+      // 联系人电弧
+      contactPhone: "",
+
+      // 是否需要发票
+      invoice: false,
+      // 作为id
+      seat_xid: "",
+
+      // 航班id
+      air: ""
     };
   },
 
@@ -108,24 +136,25 @@ export default {
       //     id: ""
       //   }
       // ]
-      this.users.push(this.users[0])
+      this.users.push(this.users[0]);
     },
 
-    handleDelUser(index){
+    handleDelUser(index) {
       // 删除乘机人列表
-      this.users.splice(index,1)
+      this.users.splice(index, 1);
+    },
+
+    // 点击保险单选框时，可随机添加
+    handelsplice(id) {
+      // 要判断数据里面是否有存在相同的id，如果有，相同id，再次点击时，就去掉
+      // indexof返回的值是索引
+      if (this.insurances.indexOf(id) > -1) {
+        this.insurances.splice(this.insurances.indexOf(id), 1);
+        // 否则就添加id
+      } else {
+        this.insurances.push(id);
+      }
     }
-
-  },
-
-  mounted() {
-    console.log(this.$store.state.user.loginFrom)
-    const{token} = this.$store.state.user.loginFrom
-    // 获取订单详情信息
-    this.$axios({
-      url: "/airorders/" + this.$route.query.id,
-      headers: { Authorization: 'Bearer'[token]}
-    });
   }
 };
 </script>
@@ -146,6 +175,11 @@ export default {
       position: relative;
       padding-bottom: 20px;
       border-bottom: 1px dashed #eee;
+      &:first-child {
+        .del_user {
+          display: none;
+        }
+      }
       .del_user {
         position: absolute;
         top: 50%;
@@ -159,9 +193,6 @@ export default {
         text-align: center;
         line-height: 15px;
         cursor: pointer;
-        &:first-child {
-          display: none;
-        }
       }
     }
 
