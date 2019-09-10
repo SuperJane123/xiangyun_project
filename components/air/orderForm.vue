@@ -20,8 +20,10 @@
               </el-select>
             </el-input>
           </el-form-item>
+          <span class="del_user">-</span>
         </div>
-        <div class="info_item">
+
+        <!-- <div class="info_item">
           <el-form-item label="乘机人类型">
             <el-input placeholder="姓名" class="input-with-select">
               <el-select v-model="select" slot="prepend" placeholder="成人">
@@ -37,7 +39,8 @@
               </el-select>
             </el-input>
           </el-form-item>
-        </div>
+          <span class="del_user">-</span>
+        </div> -->
 
         <el-button type="primary" class="addMenber">添加乘机人</el-button>
       </el-form>
@@ -73,7 +76,7 @@
             <el-input></el-input>
           </el-form-item>
         </el-form>
-           <el-button type="warning" class="submit">提交订单</el-button>
+        <el-button type="warning" class="submit">提交订单</el-button>
       </div>
     </div>
   </div>
@@ -102,9 +105,28 @@ export default {
     border-bottom: 1px dashed #eee;
 
     .info_item {
+      position: relative;
       padding-bottom: 20px;
       border-bottom: 1px dashed #eee;
+      .del_user {
+        position: absolute;
+        top: 50%;
+        right: -30px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: #ddd;
+        color: #fff;
+        text-align: center;
+        line-height: 15px;
+        cursor: pointer;
+        &:first-child {
+          display: none;
+        }
+      }
     }
+
     .addMenber {
       margin-top: 20px;
     }
@@ -115,22 +137,21 @@ export default {
   }
 
   .contact {
-   .el-form-item {
+    .el-form-item {
       margin-bottom: 22px;
-      &:last-child{
-           margin-bottom: 0
+      &:last-child {
+        margin-bottom: 0;
       }
       .el-input {
-          width: 50%;
+        width: 50%;
       }
-
     }
   }
   .submit {
-      margin: 50px auto;
-      display: block;
-      width: 250px;
-      height: 50px;
+    margin: 50px auto;
+    display: block;
+    width: 250px;
+    height: 50px;
   }
 }
 
