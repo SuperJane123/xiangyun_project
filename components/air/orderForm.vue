@@ -69,18 +69,20 @@
       <div class="contact">
         <el-form ref="form" label-width="80px">
           <el-form-item label="姓名">
-            <el-input></el-input>
+            <el-input v-model="contactName"></el-input>
           </el-form-item>
           <el-form-item label="手机">
-            <el-input placeholder="请输入手机号码" class="input-with-select">
-              <el-button slot="append">发送验证码</el-button>
+            <el-input placeholder="请输入手机号码" 
+            v-model="contactPhone"
+            class="input-with-select">
+              <el-button slot="append" @click="getCode">发送验证码</el-button>
             </el-input>
           </el-form-item>
           <el-form-item label="验证码">
-            <el-input></el-input>
+            <el-input v-model="captcha"></el-input>
           </el-form-item>
         </el-form>
-        <el-button type="warning" class="submit">提交订单</el-button>
+        <el-button type="warning" class="submit" @click="handelSubmit">提交订单</el-button>
       </div>
     </div>
   </div>
@@ -97,7 +99,6 @@ export default {
   },
   data() {
     return {
-      select: "",
 
       // 乘机人信息数据
       users: [
@@ -122,7 +123,10 @@ export default {
       seat_xid: "",
 
       // 航班id
-      air: ""
+      air: "",
+
+      // 验证码
+      captcha: ''
     };
   },
 
@@ -136,7 +140,10 @@ export default {
       //     id: ""
       //   }
       // ]
-      this.users.push(this.users[0]);
+      this.users.push({
+          username: "",
+          id: ""
+        });
     },
 
     handleDelUser(index) {
@@ -154,6 +161,54 @@ export default {
       } else {
         this.insurances.push(id);
       }
+    },
+
+
+    // 点击获取验证码
+    getCode(){
+      // 判断是否有填写手机号码
+      if(!this.contactPhone){
+        this.$message.error('请输入手机号码！')
+        return
+      }
+      this.$axios({
+        url:'captchas',
+        method:'POST',
+        data:{tel:this.contactPhone}
+      }).then(res=>{
+        console.log(res)
+        this.$alert(res.data.code,'提示',{
+          confirmButtonText: '确定',
+        })
+      })
+    },
+
+    // 点击提交订单
+    handelSubmit(){
+      const {id,seat_xid} = this.$route.query
+      // 拼接参数
+      const data = {
+        users: this.users,
+          insurances: this.insurances,
+          contactName: this.contactName,
+          contactPhone: this.contactPhone,
+          invoice:this.invoice,
+          captcha: this.captcha,
+          seat_xid,
+          air: id
+      }
+      console.log(data)
+    //  const {id,seat_xid} = this.$route.query
+      this.$axios({
+        url:'/airorders',
+        method: 'POST',
+        // 设置token值
+        headers:{Authorization:`Bearer ${this.$store.state.user.loginFrom.token}` },
+        data
+          
+      }).then(res=>{
+        console.log(res)
+      })
     }
   }
 };
