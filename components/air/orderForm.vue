@@ -4,23 +4,23 @@
     <div class="air-column">
       <h2>乘机人</h2>
       <el-form>
-        <div class="info_item">
+        <div class="info_item" v-for="(item,index) in users" :key="index">
           <el-form-item label="乘机人类型">
-            <el-input placeholder="姓名" class="input-with-select">
-              <el-select v-model="select" slot="prepend" placeholder="成人">
+            <el-input placeholder="姓名" class="input-with-select" v-model="item.username">
+              <el-select value="1" slot="prepend" placeholder="成人">
                 <el-option label="成人" value="1"></el-option>
               </el-select>
             </el-input>
           </el-form-item>
           <el-form-item label="证件类型">
-            <el-input placeholder="证件号码" class="input-with-select">
-              <el-select v-model="select" slot="prepend" placeholder="身份证">
+            <el-input placeholder="证件号码" class="input-with-select" v-model="item.id">
+              <el-select  value="1" slot="prepend" placeholder="身份证">
                 <el-option label="身份证" value="1"></el-option>
                 <el-option label="护照" value="2"></el-option>
               </el-select>
             </el-input>
           </el-form-item>
-          <span class="del_user">-</span>
+          <span class="del_user" @click="handleDelUser(index)">-</span>
         </div>
 
         <!-- <div class="info_item">
@@ -40,9 +40,9 @@
             </el-input>
           </el-form-item>
           <span class="del_user">-</span>
-        </div> -->
+        </div>-->
 
-        <el-button type="primary" class="addMenber">添加乘机人</el-button>
+        <el-button type="primary" class="addMenber" @click="addMenber">添加乘机人</el-button>
       </el-form>
     </div>
 
@@ -86,8 +86,46 @@
 export default {
   data() {
     return {
-      select: ""
+      select: "",
+
+      // 乘机人信息数据
+      users: [
+        {
+          username: "",
+          id: ""
+        }
+      ]
     };
+  },
+
+  methods: {
+    // 添加新乘机人列表
+    addMenber() {
+      // this.users = [
+      //   ...this.users,
+      //   {
+      //     username: "",
+      //     id: ""
+      //   }
+      // ]
+      this.users.push(this.users[0])
+    },
+
+    handleDelUser(index){
+      // 删除乘机人列表
+      this.users.splice(index,1)
+    }
+
+  },
+
+  mounted() {
+    console.log(this.$store.state.user.loginFrom)
+    const{token} = this.$store.state.user.loginFrom
+    // 获取订单详情信息
+    this.$axios({
+      url: "/airorders/" + this.$route.query.id,
+      headers: { Authorization: 'Bearer'[token]}
+    });
   }
 };
 </script>
