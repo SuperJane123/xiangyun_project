@@ -50,7 +50,7 @@
     <div class="air-column">
       <h2>保险</h2>
       <div class="insurance">
-        <div class="insurance_item" v-for="(item,index) in data.insurances" :key="index">
+        <div class="insurance_item" v-for="(item,index) in infoData.insurances" :key="index">
           <el-checkbox
             :label="`${item.type}: ¥${item.price}/份x1 最高赔付${item.compensation}元`"
             border
@@ -85,18 +85,13 @@
         <el-button type="warning" class="submit" @click="handelSubmit">提交订单</el-button>
       </div>
     </div>
+     <span v-show="false">{{ allPrice}}</span>
   </div>
+ 
 </template>
 
 <script>
 export default {
-  // 接收来自父组件的数据
-  props: {
-    data: {
-      type: Object,
-      default: {}
-    }
-  },
   data() {
     return {
 
@@ -126,7 +121,12 @@ export default {
       air: "",
 
       // 验证码
-      captcha: ''
+      captcha: '',
+
+      // 机票数据
+      infoData:{
+       
+      }
     };
   },
 
@@ -176,7 +176,7 @@ export default {
         method:'POST',
         data:{tel:this.contactPhone}
       }).then(res=>{
-        console.log(res)
+        // console.log(res)
         this.$alert(res.data.code,'提示',{
           confirmButtonText: '确定',
         })
@@ -197,7 +197,6 @@ export default {
           seat_xid,
           air: id
       }
-      console.log(data)
     //  const {id,seat_xid} = this.$route.query
       this.$axios({
         url:'/airorders',
@@ -208,9 +207,52 @@ export default {
           
       }).then(res=>{
         console.log(res)
-      })
+        const {id} = this.$route.query
+          this.$router.push({path:'/air/pay',query:{id}})
+        this.$message.success('页面正在跳中...')
+       
+       })
     }
+  },
+
+
+  computed: {
+    allPrice(){
+      // 因为一开始是没有数据的，所以要判断，是否有值先
+      if(!this.infoData.seat_infos){
+        return 0;
+      }
+      let allPrice = 0;
+      // 票价
+      allPrice += this.infoData.seat_infos.org_settle_price
+      // 燃油费
+      allPrice += this.infoData.airport_tax_audlet;
+      // 保险费
+      allPrice +=  30*this.insurances.length;
+      allPrice *=  this.users.length;
+
+      // 把值存到store中
+      this.$store.commit('order/setAllPrice',allPrice)
+      return allPrice
+    }
+  },
+
+   mounted() {
+    const { id, seat_xid } = this.$route.query;
+    // 获取订单详情信息
+    this.$axios({
+      url: "/airs/" + id,
+      params: {
+        seat_xid
+      }
+    }).then(res => {
+      console.log(res);
+      this.infoData = res.data;
+      // 调用$store的方法，把值存到stroe中
+      this.$store.commit('order/setInfoData',this.infoData)
+    });
   }
+
 };
 </script>
 

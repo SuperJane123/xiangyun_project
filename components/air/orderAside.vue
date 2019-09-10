@@ -2,21 +2,21 @@
   <div class="aside">
     <div class="air_info">
       <el-row type="flex" justify="space-between" class="info_top">
-        <strong>2019-04-15</strong>
-        <span>广州 - 上海</span>
+        <strong>{{data.dep_date}}</strong>
+        <span>{{data.org_city_name}} - {{data.dst_city_name}}</span>
       </el-row>
       <el-row type="flex" justify="space-between" class="info_foot">
         <el-col :span="5">
-          <p>20:30</p>
-          <span>白云机场T1</span>
+          <p>{{data.dep_time}}</p>
+          <span>{{data.org_airport_name}}</span>
         </el-col>
         <el-col :span="14">
           <span>--- 2时20分 ---</span>
-          <span>东航MU5316</span>
+          <span>{{data.airline_name}}{{data.flight_no}}</span>
         </el-col>
         <el-col :span="5">
-          <p>22:50</p>
-          <span>浦东机场T2</span>
+          <p>{{data.arr_time}}</p>
+          <span>{{data.dst_airport_name}}</span>
         </el-col>
       </el-row>
     </div>
@@ -28,18 +28,18 @@
       </el-row>
       <el-row class="order_item" type="flex" justify="space-between"  > 
           <span>成人机票</span>
-          <span>¥2740</span>
+          <span>¥{{data.seat_infos.org_settle_price}}</span>
           <span>x1</span>
       </el-row>
       <el-row class="order_item" type="flex" justify="space-between"  > 
           <span>机建+燃油</span>
-          <span>¥50/人/单程</span>
+          <span>¥{{data.airport_tax_audlet}}/人/单程</span>
           <span>x1</span>
       </el-row>
        <el-row class="order_item" type="flex" justify="space-between" align="middle" > 
           <span>应付总额：</span>
 
-          <span class="price">￥2790</span>
+          <span class="price">￥{{this.$store.state.order.allPrice}}</span>
       </el-row>
       
       
@@ -48,7 +48,31 @@
 </template>
 
 <script>
-export default {};
+export default {
+  // props: {
+  //   data:{
+  //     type: Object,
+  //     default:{
+  //       seat_infos:{}
+  //     }
+  //   }
+  // },
+    data(){
+      return {
+        data:{
+          seat_infos:{}
+        }
+      }
+    },
+
+
+  mounted(){
+    setTimeout(()=>{
+       this.data = this.$store.state.order.infodata
+    },10)
+   
+  }
+};
 </script>
 
 <style lang="less" scoped>
