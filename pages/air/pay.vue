@@ -3,7 +3,7 @@
     <div class="main">
       <div class="pay-title">
         支付总金额
-        <span class="pay-price">￥{{$store.state.order.allPrice}}</span>
+        <span class="pay-price">￥{{order.price}}</span>
       </div>
       <div class="pay-main">
         <h4>微信支付</h4>
@@ -26,7 +26,13 @@
 <script>
 import QRCode from "qrcode";
 export default {
-   
+  data() {
+    return {
+      order: {},
+      timer: null   //定时器变量
+    };
+  },
+
   mounted() {
     // toCanvas('qrcode-stage', text, )
     // 因为获取的id是在组件加载后就获取，本地数据回传到store没有那么块，所以要用定时
@@ -39,12 +45,51 @@ export default {
         }
       }).then(res => {
         console.log(res);
-        const canvas = document.getElementById('qrcode-stage')
-        QRCode.toCanvas(canvas, res.data.payInfo.code_url,{
-            width: 200
-        })
+        // 赋值
+        this.order = res.data;
+        const canvas = document.getElementById("qrcode-stage");
+        QRCode.toCanvas(canvas, res.data.payInfo.code_url, {
+          width: 200
+        });
+        this.timer = setInterval(() => {
+          // 每3秒执行
+          this.checkPay();
+        }, 3000);
       });
     }, 10);
+  },
+
+  destroyed(){
+    // 为了避免跳转到其他页面使，也执行以下代码，需要销毁组件
+    clearInterval(this.timer)
+    this.timer = null
+  },
+
+  methods: {
+    checkPay() {
+      //查询付款状态
+      this.$axios({
+        url: "/airorders/checkpay",
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${this.$store.state.user.loginFrom.token}`
+        },
+        data: {
+          id: this.$route.query.id, //订单id
+          nonce_str: this.order.price, //支付接口返回的订单金额
+          out_trade_no: this.order.orderNo //订单编号
+        }
+      }).then(res => {
+        console.log(res);
+        if(res.data.statusTxt === '支付完成'){
+          // 清除定时器
+          clearInterval(this.timer);
+          this.$alert(res.data.statusTxt,'提示')
+          this.timer = null
+
+        }
+      });
+    }
   }
 };
 </script>
