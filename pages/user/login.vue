@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <!-- justify: 水平方向    align: 垂直方向-->
     <el-row type="flex" class="main" justify="center" align="middle">
       <!-- 表单 -->
       <div class="from-wapper">

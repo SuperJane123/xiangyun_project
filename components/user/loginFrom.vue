@@ -34,6 +34,7 @@ export default {
   },
   methods: {
     handleLogin() {
+      // 表单验证
       this.$refs.loginFrom.validate(valid => {
         console.log(valid);
         if (valid) {

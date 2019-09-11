@@ -221,7 +221,7 @@ export default {
         },
         data
       }).then(res => {
-        console.log(res);
+        // console.log(res);
         const { id } = res.data.data;
         //   this.$router.push({path:'/air/pay',query:{id}})
         // this.$message.success('页面正在跳中...')
@@ -265,7 +265,7 @@ export default {
         seat_xid
       }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
       this.infoData = res.data;
       // 调用$store的方法，把值存到stroe中
       this.$store.commit("order/setInfoData", this.infoData);

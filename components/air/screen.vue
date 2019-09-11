@@ -106,56 +106,73 @@ export default {
           label: "小",
           value: "S"
         }
-      ]
+      ],
+
+      // 多级筛选功能的数据
+      filters: {
+        company: {key: "airline_name", value: ""},
+        airModel: {key: "plane_size", value: ""},
+        airport: {key: "org_airport_name", value: ""},
+        flightTimes: {key: "dep_time", value: ""}
+      }
     };
   },
 
   methods: {
     // 点击起飞机场时，触发的函数
     handelAirport(val) {
+      this.filters.airport.value = val
+      this.handelFilters()
       // 筛选出匹配的机场名
-      const arr = this.data.flights.filter(e => {
-        return e.org_airport_name === val;
-      });
+      // const arr = this.data.flights.filter(e => {
+      //   return e.org_airport_name === val;
+      // });
       // 调用父组件的方法
-      this.$emit("setFlightsItem", arr);
+      // this.$emit("setFlightsItem", arr);
     },
 
     // 点击起飞时间时出触发的函数
 
     handleDepTime(val) {
+      this.handelFilters()
       //  console.log(val); //比如6，12
       //  const Hour = val.split(',')
       const [from, to] = val.split(",");
       // console.log(form, to);
-      const dep_time = this.data.flights.filter(e => {
-        const current = e.dep_time.split(":")[0];
-        return +from <= +current && +current < +to;
-      });
+      // const dep_time = this.data.flights.filter(e => {
+      //   const current = e.dep_time.split(":")[0];
+      //   return +from <= +current && +current < +to;
+      // });
+      this.filters.flightTimes.value = `${from}:00`
+
       // console.log(dep_time);
-      this.$emit("setFlightsItem", dep_time);
+      // this.$emit("setFlightsItem", dep_time);
       // console.log(this.flightsList.flightTimes)
     },
 
     // 选择航空公司时触发的函数
     handleCompany(val) {
+      this.filters.company.value = val
+      this.handelFilters()
       // console.log(val)
       // 从数组中筛选出机场航空名称符合的数据，重新赋值到另一个数组中
-      const arr = this.data.flights.filter(e => {
-        return e.airline_name === val;
-      });
-      this.$emit("setFlightsItem", arr);
+      // const arr = this.data.flights.filter(e => {
+      //   return e.airline_name === val;
+      // });
+      // this.$emit("setFlightsItem", arr);
     },
 
     // 点击选择机型时触发的函数
     handleAirsize(val) {
+      this.filters.airModel.value = val
+      this.handelFilters()
       // console.log(val);
       // 筛选出机型匹配的内容
-      const arr = this.data.flights.filter(e => {
-        return e.plane_size === val;
-      });
+      // const arr = this.data.flights.filter(e => {
+      //   return e.plane_size === val;
+      // });
       // 调用组件的方法
-      this.$emit("setFlightsItem", arr);
+      // this.$emit("setFlightsItem", arr);
     },
 
     // 点击撤销按钮时触发的函数
@@ -165,8 +182,40 @@ export default {
         this.flightsList[key] = "";
       }
       // 刷新数据
-      this.$emit('setFlightsItem',this.data.flights)
+      this.$emit("setFlightsItem", this.data.flights);
+    },
+
+    // 处理多种筛选功能
+    handelFilters(from,to){
+      // 定义一个数组，用来装符合条件的数据
+      const arr = []
+      this.data.flights.forEach(item=>{
+        // 先假设条件是成立的
+        let vaild = true;
+        // 通过以下方法返回的数据是["company","airModel"]
+        Object.keys(this.filters).forEach(v=>{
+          //  判断filters中的value值是否为空,如果为空，就不需要循环
+          if(!this.filters[v].value) return
+          if(item[this.filters[v].key] !== this.filters[v].value){
+            vaild = false
+          }
+
+          if(item[ from <= this.filters[v].key.split(':')[0] < to ]){
+            vaild = true
+          }
+        })
+        if(vaild){
+          arr.push(item)
+        }
+      })
+
+      this.$emit('setFlightsItem',arr)
     }
+    
+  },
+
+  mounted() {
+    console.log();
   }
 };
 </script>

@@ -1,8 +1,10 @@
 <template>
   <div>
+    <!-- 头部 -->
    <Header/>
     <!-- 内容占位符，相等于router-view -->
     <nuxt />
+    <!-- 脚步 -->
     <Footer/>
   </div>
 </template>
@@ -31,7 +33,7 @@ html {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased;  /**这个属性可以使页面上的字体抗锯齿，使用后字体看起来更清晰舒服 */
   box-sizing: border-box;
 }
 

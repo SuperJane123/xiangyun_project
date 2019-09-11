@@ -47,14 +47,10 @@ export default {
 
   methods:{
     handleLoginOut(){
-      // 清除store中的用于信息
+      // 清除store中的用户信息
       this.$store.commit('user/clearUserInfo')
     }
   },
-
-  mounted() {
-    console.log(this.$store.state);
-  }
 };
 </script>
 
@@ -93,6 +89,7 @@ export default {
           border-bottom: 5px solid #409eff;
         }
       }
+      // 该class是nuxt会自动去匹配的nuxt-link的to的值，如果url和to的值相等会自动加上上面的class
       .nuxt-link-exact-active {
         background-color: #409eff;
         color: #fff;
@@ -131,5 +128,4 @@ export default {
   }
 }
 
-// 该class是nuxt会自动去匹配的nuxt-link的to的值，如果url和to的值相等会自动加上上面的class
 </style>

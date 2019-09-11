@@ -66,6 +66,7 @@ export default {
 
 
 methods: {
+  // 点击tab栏切换页面
   handleClick(index){
     if(index === 2){
       this.$router.push('air')
@@ -75,13 +76,13 @@ methods: {
 },
 
   mounted (){
+    // 获取轮播图图片
     this.$axios({
       url: 'scenics/banners'
     }).then(res=>{
       console.log(res)
       if(res.status === 200){
         this.bannerImg = res.data.data
-        console.log(this.bannerImg)
       }
     }).catch(err=>{
       console.log(err)
