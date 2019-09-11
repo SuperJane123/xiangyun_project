@@ -207,10 +207,13 @@ export default {
           
       }).then(res=>{
         console.log(res)
-        const {id} = this.$route.query
-          this.$router.push({path:'/air/pay',query:{id}})
-        this.$message.success('页面正在跳中...')
-       
+        const {id} = res.data.data
+        //   this.$router.push({path:'/air/pay',query:{id}})
+        // this.$message.success('页面正在跳中...')
+        this.$router.push({
+          path:'/air/pay',
+          query:{ id }
+        })
        })
     }
   },
