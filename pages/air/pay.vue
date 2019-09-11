@@ -26,9 +26,7 @@
 <script>
 import QRCode from "qrcode";
 export default {
-    data(){
-
-    },
+   
   mounted() {
     // toCanvas('qrcode-stage', text, )
     // 因为获取的id是在组件加载后就获取，本地数据回传到store没有那么块，所以要用定时

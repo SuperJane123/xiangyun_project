@@ -48,7 +48,7 @@
             <span>{{item.name}}</span>
             | {{item.supplierName}}
           </el-col>
-          <el-col :span="5" class="price">¥{{item.settle_price}}</el-col>
+          <el-col :span="5" class="price">¥{{item.org_settle_price}}</el-col>
           <el-col :span="3" class="choose">
             <el-button type="warning" size="small" class="choose_button" @click="handleChoose(data.id,item.seat_xid)">选定</el-button>
             <p>剩余：{{item.discount}}</p>

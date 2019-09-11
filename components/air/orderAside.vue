@@ -11,7 +11,7 @@
           <span>{{data.org_airport_name}}</span>
         </el-col>
         <el-col :span="14">
-          <span>--- 2时20分 ---</span>
+          <span>--- {{rangeTime}} ---</span>
           <span>{{data.airline_name}}{{data.flight_no}}</span>
         </el-col>
         <el-col :span="5">
@@ -21,57 +21,80 @@
       </el-row>
     </div>
     <div class="order_info">
-      <el-row class="order_item" type="flex" justify="space-between"  > 
-          <span>订单总价</span>
-          <span>金额</span>
-          <span>数量</span>
+      <el-row class="order_item" type="flex" justify="space-between">
+        <span>订单总价</span>
+        <span>金额</span>
+        <span>数量</span>
       </el-row>
-      <el-row class="order_item" type="flex" justify="space-between"  > 
-          <span>成人机票</span>
-          <span>¥{{data.seat_infos.org_settle_price}}</span>
-          <span>x1</span>
+      <el-row class="order_item" type="flex" justify="space-between">
+        <span>成人机票</span>
+        <span>¥{{data.seat_infos.org_settle_price}}</span>
+        <span>x1</span>
       </el-row>
-      <el-row class="order_item" type="flex" justify="space-between"  > 
-          <span>机建+燃油</span>
-          <span>¥{{data.airport_tax_audlet}}/人/单程</span>
-          <span>x1</span>
+      <el-row class="order_item" type="flex" justify="space-between">
+        <span>机建+燃油</span>
+        <span>¥{{data.airport_tax_audlet}}/人/单程</span>
+        <span>x1</span>
       </el-row>
-       <el-row class="order_item" type="flex" justify="space-between" align="middle" > 
-          <span>应付总额：</span>
+      <el-row class="order_item" type="flex" justify="space-between" align="middle">
+        <span>应付总额：</span>
 
-          <span class="price">￥{{this.$store.state.order.allPrice}}</span>
+        <span class="price">￥{{this.$store.state.order.allPrice}}</span>
       </el-row>
-      
-      
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  // props: {
-  //   data:{
-  //     type: Object,
-  //     default:{
-  //       seat_infos:{}
-  //     }
-  //   }
-  // },
-    data(){
-      return {
-        data:{
-          seat_infos:{}
-        }
+
+  // 这里传值推荐用父传子，因为使用vuex需要延迟获取数据的时间，导致跳转到订单页面时，右侧的订单详情数据无法及时更新
+  props: {
+    data:{
+      type: Object,
+      default:{
+        seat_infos:{}
       }
-    },
+    }
+  },
+  data() {
+    return {
+      // data: {
+      //   seat_infos: {}
+      // }
+    };
+  },
 
+  computed: {
+    // 计算到达时间与出发的相差时间
+   rangeTime() {
+      if(!this.data.dep_time) return
+        const dep = this.data.dep_time.split(":");
+        const dst = this.data.arr_time.split(":");
 
-  mounted(){
-    setTimeout(()=>{
-       this.data = this.$store.state.order.infodata
-    },10)
+        // 要判抵达的时间是否是第二天，如果是，需要+24小时
+        if (dst[0] < dep[0]) {
+          dst[0] += 24;
+        }
+
+        // 算出出发和到达的总分钟,记得要做隐式转换！！！
+        const depMin = dep[0] * 60 + +dep[1];
+        const dstMin = dst[0] * 60 + +dst[1];
+        // 相减
+        const rangeMin = dstMin - depMin;
+        const hour = Math.floor(rangeMin / 60)
+        const min =  rangeMin % 60
+      return `${hour}时${min}分`;
+    }
    
-  }
+  },
+
+  // mounted() {
+  //   setTimeout(() => {
+  //     this.data = this.$store.state.order.infodata;
+  //     console.log(this.data);
+  //   }, 10);
+  // }
 };
 </script>
 
@@ -106,19 +129,19 @@ export default {
     }
   }
   .order_info {
-      font-size: 14px;
-      color: #666;
-      .order_item {
-          padding: 10px 15px;
-          border-bottom: 1px dashed #ddd;
-          &:last-child{
-              border-bottom: 0;
-          }
-          .price {
-              font-size: 28px;
-              color: #ffa500
-          }
+    font-size: 14px;
+    color: #666;
+    .order_item {
+      padding: 10px 15px;
+      border-bottom: 1px dashed #ddd;
+      &:last-child {
+        border-bottom: 0;
       }
+      .price {
+        font-size: 28px;
+        color: #ffa500;
+      }
+    }
   }
 }
 </style>
