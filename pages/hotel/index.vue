@@ -4,7 +4,14 @@
 
 <script>
 export default {
+   mounted(){
+        this.$axios({
+            url:'/hotels/options',
 
+        }).then(res=>{
+            console.log(res)
+        })
+    }
 }
 </script>
 

@@ -134,16 +134,21 @@ export default {
     // 点击起飞时间时出触发的函数
 
     handleDepTime(val) {
-      this.handelFilters()
+       this.filters.flightTimes.value = val.split(",");
+      //  console.log(this.filters.flightTimes.value)
+       const from = this.filters.flightTimes.value[0]
+       const to = this.filters.flightTimes.value[1]
+       const det_time = this.filters.flightTimes.key
+      this.handelFilters(from,to,det_time)
       //  console.log(val); //比如6，12
       //  const Hour = val.split(',')
-      const [from, to] = val.split(",");
+      // const [from, to] = val.split(",");
       // console.log(form, to);
       // const dep_time = this.data.flights.filter(e => {
       //   const current = e.dep_time.split(":")[0];
       //   return +from <= +current && +current < +to;
-      // });
-      this.filters.flightTimes.value = `${from}:00`
+      // }); [6,12]
+     
 
       // console.log(dep_time);
       // this.$emit("setFlightsItem", dep_time);
@@ -192,17 +197,21 @@ export default {
       this.data.flights.forEach(item=>{
         // 先假设条件是成立的
         let vaild = true;
+        let vaild1 = false
         // 通过以下方法返回的数据是["company","airModel"]
         Object.keys(this.filters).forEach(v=>{
           //  判断filters中的value值是否为空,如果为空，就不需要循环
           if(!this.filters[v].value) return
-          if(item[this.filters[v].key] !== this.filters[v].value){
+          if(item[this.filters[v].key] !== this.filters[v].value ){
             vaild = false
           }
-
-          if(item[ from <= this.filters[v].key.split(':')[0] < to ]){
-            vaild = true
+          if(+from <= +item[this.filters[v].key].split(':')[0] && +item[this.filters[v].key].split(':')[0] < +to){
+            vaild1 = true
+              arr.push(item)
+             return
+            console.log(123)
           }
+         
         })
         if(vaild){
           arr.push(item)
